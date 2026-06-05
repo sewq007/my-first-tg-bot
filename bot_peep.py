@@ -1,8 +1,8 @@
-import telebot # Библиотека для создания бота в Telegram
-import webbrowser # Для открытия сайта по команде /site
-import random # Для выбора случайного факта из списка
-import os # Для работы с переменными окружения
-from dotenv import load_dotenv #Для загрузки переменных окружения из файла .env / Безопасность токена бота
+import telebot
+import webbrowser 
+import random
+import os 
+from dotenv import load_dotenv 
 
 load_dotenv()
 TOKEN = os.getenv("BOT_TOKEN") 
@@ -31,9 +31,6 @@ facts = [
 
 todo_list = {}
 
-
-#Рандомные факты снизу:
-
 @bot.message_handler(commands=["fact"])
 def send_fact(message):
     random_fact = random.choice(facts)
@@ -41,7 +38,6 @@ def send_fact(message):
 
 #-----------------------------------------------------------
 
-#Список задач снизу:
 @bot.message_handler(commands=["todo"])
 def manage_todo(message):
     user_id = message.chat.id
@@ -63,21 +59,12 @@ def manage_todo(message):
 
 #-----------------------------------------------------------
 
-#Открытие сайта снизу:
-@bot.message_handler(commands=["site"])
-def site(message):
-    webbrowser.open("https://www.youtube.com/watch?v=-phwaQ8VaKk")
-
-#-----------------------------------------------------------
-
-#Приветствие снизу:  
 @bot.message_handler(commands=["start"])
 def start_cmd(message):
     bot.send_message(message.chat.id, f"Приветики-Пистолетики, {message.from_user.first_name} {message.from_user.last_name}")
 
 #----------------------------------------------------------- 
 
-#Помощь снизу:
 @bot.message_handler(commands=["help"])
 def send_help(message):
     help_text = (
@@ -87,13 +74,11 @@ def send_help(message):
         "💡 /fact - Рассказать случайный факт\n"
         "📝 /todo [задача] - Добавить задачу в список\n"
         "📋 /todo - Показать мой список задач\n"
-        "🌐 /site - Открыть ебейший мувик"
     )
     bot.send_message(message.chat.id, help_text) 
 
 #----------------------------------------------------------- 
 
-#Информация снизу:
 @bot.message_handler()
 def info(message):
     if message.text.lower() == "привет":
@@ -102,6 +87,5 @@ def info(message):
         bot.reply_to(message, f"Твой ID: {message.from_user.id}") 
 
 #-----------------------------------------------------------
-# Запуск бота: 
-bot.infinity_polling()
 
+bot.infinity_polling()
